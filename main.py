@@ -1,45 +1,51 @@
-import pandas as pd
-from pathlib import Path
-from src.cleaner import clean_dataframe
+from src.project_analyzer import ProjectAnalyzer
+from src.report_generator import ReportGenerator
+from src.presentation_generator import PresentationGenerator
 
-DATA_FOLDER = Path("data")
+print("=" * 70)
+print("AI PROJECT HEALTH REPORTING AGENT")
+print("=" * 70)
 
-excel_files = list(DATA_FOLDER.glob("*.xlsx"))
+analyzer = ProjectAnalyzer()
+report_generator = ReportGenerator()
+presentation_generator = PresentationGenerator()
 
-print("=" * 80)
-print("PROJECT HEALTH REPORTING AGENT")
-print("=" * 80)
+results = analyzer.analyze_projects()
 
-for file in excel_files:
+for project in results:
 
-    print(f"\n📄 File: {file.name}")
+    print("\n" + "=" * 60)
 
-    workbook = pd.ExcelFile(file)
+    print(f"Project : {project['project']}")
 
-    print("\nAvailable Sheets:")
-    for sheet in workbook.sheet_names:
-        print(f"   • {sheet}")
+    print("\nMetrics")
 
-    print("\n" + "-" * 80)
+    for key, value in project["metrics"].items():
 
-    for sheet in workbook.sheet_names:
+        print(f"{key:25}: {value}")
 
-        print(f"\n📑 Sheet: {sheet}")
+    print(f"\nScore : {project['score']}")
+    print(f"RAG   : {project['rag']}")
 
-        df = pd.read_excel(file, sheet_name=sheet)
+    print("\nExecutive Summary")
 
-        df = clean_dataframe(df)
-        print(f"Rows    : {df.shape[0]}")
-        print(f"Columns : {df.shape[1]}")
+    print(project["analysis"]["executive_summary"])
 
-        print("\nColumn Names:")
-        for column in df.columns:
-            print(f"   - {column}")
+    print("\nTop Risks")
 
-        print("\nFirst 5 Rows:")
-        print(df.head())
+    for risk in project["analysis"]["key_risks"]:
+        print(f"- {risk}")
 
-        print("\nMissing Values:")
-        print(df.isnull().sum())
+    print("\nRecommendations")
 
-        print("\n" + "=" * 80)
+    for rec in project["analysis"]["recommendations"]:
+        print(f"- {rec}")
+
+    report_path = report_generator.generate(project)
+
+    print(f"\nWeekly report saved to: {report_path}")
+
+presentation_path = presentation_generator.generate(results)
+
+print("\n" + "=" * 70)
+print(f"Executive presentation saved to: {presentation_path}")

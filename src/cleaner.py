@@ -20,6 +20,10 @@ def clean_dataframe(df):
             errors="coerce"
         )
 
+        # Convert decimal percentages (0.44) to actual percentages (44)
+        mask = df["% Complete"] <= 1
+        df.loc[mask, "% Complete"] = df.loc[mask, "% Complete"] * 100
+
     # Convert date columns
     date_columns = [
         "Start Date",

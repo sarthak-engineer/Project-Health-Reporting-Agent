@@ -1,27 +1,28 @@
-# Virtual environment
+# Virtual Environment
 venv/
-ENV/
-env/
-.venv/
 
-# Configuration and environment variables
-.env
-
-# Data files (contains sensitive project plans)
-data/*.xlsx
-
-# Output files (contains generated reports/presentations)
-output/weekly_reports/*
-output/presentations/*
-!output/weekly_reports/.gitkeep
-!output/presentations/.gitkeep
-
-# Python cache files
+# Python Cache
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
 
-# IDE files
+# Environment Variables
+.env
+
+# IDE
 .vscode/
 .idea/
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Output Files (Optional)
+# Uncomment if you don't want generated reports in GitHub
+output/
+
+# Data Files (contains sensitive project plans)
+data/*.xlsx
+
+# Logs
+*.log

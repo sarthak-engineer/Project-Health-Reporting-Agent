@@ -1,0 +1,27 @@
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Configuration and environment variables
+.env
+
+# Data files (contains sensitive project plans)
+data/*.xlsx
+
+# Output files (contains generated reports/presentations)
+output/weekly_reports/*
+output/presentations/*
+!output/weekly_reports/.gitkeep
+!output/presentations/.gitkeep
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE files
+.vscode/
+.idea/
